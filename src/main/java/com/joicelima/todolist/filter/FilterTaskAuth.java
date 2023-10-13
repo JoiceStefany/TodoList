@@ -1,6 +1,7 @@
 package com.joicelima.todolist.filter;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,8 +21,13 @@ public class FilterTaskAuth extends OncePerRequestFilter{
             throws ServletException, IOException {
 
               var authorization =  request.getHeader("Authorization");
-              System.out.println("Authorization");
-              System.out.println(authorization);
+
+             var authEncoded = authorization.substring("Basic".length()).trim();
+
+             byte[] authDecode = Base64.getDecoder().decode(authEncoded);
+            
+         System.out.println("Authorization");
+              System.out.println(authDecode);
 
        filterChain.doFilter(request, response);
     }
