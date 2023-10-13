@@ -25,9 +25,17 @@ public class FilterTaskAuth extends OncePerRequestFilter{
              var authEncoded = authorization.substring("Basic".length()).trim();
 
              byte[] authDecode = Base64.getDecoder().decode(authEncoded);
-            
-         System.out.println("Authorization");
-              System.out.println(authDecode);
+             
+             var authString = new String(authDecode);
+
+          
+             String[] credentials = authString.split(":");
+             String username = credentials[0];
+             String password = credentials[1];
+
+               System.out.println("Authorization");
+              System.out.println(username);
+              System.out.println(password);
 
        filterChain.doFilter(request, response);
     }
