@@ -2,20 +2,29 @@ package com.joicelima.todolist.filter;
 
 import java.io.IOException;
 
-import jakarta.servlet.Filter;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 
-public class FilterTaskAuth implements Filter{
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@Component
+public class FilterTaskAuth extends OncePerRequestFilter{
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-                
-                System.out.println("Chegou no Filtro!");
-                chain.doFilter(request, response);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+
+              var authorization =  request.getHeader("Authorization");
+              System.out.println("Authorization");
+              System.out.println(authorization);
+
+       filterChain.doFilter(request, response);
     }
+
     
 }
